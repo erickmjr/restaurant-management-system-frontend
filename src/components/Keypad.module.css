@@ -1,0 +1,105 @@
+/*
+ * Régua entre as teclas, sem raio. A única sombra do app mora aqui,
+ * dura e deslocada 2px, como o corpo de um teclado físico.
+ */
+.pad {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr) 1.2fr;
+	grid-auto-rows: clamp(64px, 9.5dvh, 80px);
+	gap: 1px;
+	min-width: 0;
+	margin: 0 2px 2px 0;
+	padding: 0;
+	border: 1px solid var(--tinta);
+	background: var(--regua-forte);
+	box-shadow: 2px 2px 0 var(--tinta);
+}
+
+.key {
+	display: grid;
+	place-items: center;
+	padding: 0;
+	border: 0;
+	background: var(--papel-alto);
+	color: var(--tinta);
+	font-family: var(--mono);
+	font-size: 28px;
+	font-weight: 500;
+	font-variant-numeric: tabular-nums;
+	user-select: none;
+	-webkit-user-select: none;
+	transition: background-color var(--tecla);
+}
+
+.key:focus-visible {
+	outline-offset: -4px;
+}
+
+.cap {
+	display: grid;
+	place-items: center;
+	transition: transform var(--tecla);
+}
+
+/* Tecla afundando. 60ms, sem mola. */
+.key:active {
+	background: var(--regua);
+}
+
+.key:active .cap {
+	transform: translateY(2px);
+}
+
+.erase {
+	grid-column: 4;
+	grid-row: 1;
+	color: var(--tinta-media);
+}
+
+.zero {
+	grid-column: 1 / span 3;
+	grid-row: 4;
+}
+
+.confirm {
+	grid-column: 4;
+	grid-row: 2 / span 3;
+	background: var(--tinta);
+	color: var(--papel);
+	font-family: var(--sans);
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.confirm:focus-visible {
+	outline-color: var(--papel);
+}
+
+.confirm:active {
+	background: color-mix(in srgb, var(--tinta) 80%, var(--papel));
+}
+
+/* Ainda falta algo. A tecla recua, mas responde ao toque dizendo o que falta. */
+.waiting {
+	background: var(--tinta-media);
+}
+
+.pad:disabled .key {
+	color: var(--tinta-media);
+}
+
+.pad:disabled .confirm {
+	background: var(--tinta-media);
+	color: var(--papel);
+}
+
+/* Em tela grande as teclas crescem. Alvo maior para o mouse, e a tela fica menos vazia. */
+@media (min-width: 900px) and (min-height: 700px) {
+	.pad {
+		grid-auto-rows: clamp(80px, 12dvh, 128px);
+	}
+
+	.confirm {
+		font-size: 20px;
+	}
+}
