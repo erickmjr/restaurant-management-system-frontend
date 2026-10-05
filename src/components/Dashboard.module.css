@@ -1,0 +1,409 @@
+.header {
+	margin-bottom: 24px;
+}
+
+.title {
+	margin-top: 4px;
+	font-family: var(--serif);
+	font-size: 44px;
+	line-height: 1.05;
+	letter-spacing: -0.01em;
+	text-wrap: balance;
+}
+
+.iso {
+	margin-top: 8px;
+	font-family: var(--mono);
+	font-size: 12px;
+	font-variant-numeric: tabular-nums;
+	color: var(--tinta-media);
+}
+
+/*
+ * A moldura mede a largura que o painel tem de verdade, com ou sem barra
+ * lateral, e todas as decisões de coluna saem dela.
+ */
+.frame {
+	container-type: inline-size;
+}
+
+.board {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	column-gap: 48px;
+	transition: opacity var(--rapido);
+}
+
+/* Trocando de período, o quadro anterior fica na tela esmaecido. Sem piscar e sem pular. */
+.board[data-stale='true'] {
+	opacity: 0.45;
+}
+
+.block {
+	min-width: 0;
+	margin-bottom: 40px;
+}
+
+.full {
+	grid-column: 1 / -1;
+}
+
+.head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 4px 16px;
+	margin-bottom: 12px;
+	padding-bottom: 8px;
+	border-bottom: 1px solid var(--regua-forte);
+}
+
+.heading {
+	font-size: 12px;
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--tinta-media);
+}
+
+/* O total do período. Régua dupla em cima, como em livro contábil. */
+.hero {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 8px 24px;
+	padding: 16px 0;
+	border-top: 3px double var(--tinta);
+}
+
+.hero > :last-child {
+	margin-left: auto;
+}
+
+.versus {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 2px 10px;
+	margin-top: 4px;
+	font-size: 14px;
+	color: var(--tinta-media);
+}
+
+.against {
+	font-size: 12px;
+}
+
+/*
+ * Os números que explicam o total. No celular são linhas de livro, rótulo à
+ * esquerda e valor à direita. Com largura viram um quadro pautado, e o número
+ * de colunas acompanha o espaço. O valor nunca é cortado.
+ */
+.tiles {
+	margin: 0;
+	border-top: 1px solid var(--regua-forte);
+}
+
+.tile {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	min-width: 0;
+	min-height: 56px;
+	padding: 8px 0;
+	border-bottom: 1px solid var(--regua);
+}
+
+.tileBody {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 2px;
+	min-width: 0;
+	margin: 0;
+	text-align: right;
+}
+
+.figure {
+	font-family: var(--mono);
+	font-size: 20px;
+	font-weight: 500;
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+
+.aside {
+	font-size: 12px;
+	color: var(--tinta-media);
+}
+
+.dayRef {
+	font-size: 12px;
+	color: var(--tinta);
+	text-decoration-color: var(--regua-forte);
+	text-underline-offset: 3px;
+}
+
+.dayRef:hover {
+	text-decoration-color: var(--tinta);
+}
+
+/*
+ * Uma grade só para a lista inteira, e cada linha herda as colunas.
+ * É isso que faz todas as barras começarem e terminarem no mesmo lugar.
+ */
+.days {
+	display: grid;
+	grid-template-columns: max-content minmax(24px, 1fr) max-content;
+	column-gap: 12px;
+}
+
+/* No celular a fatia tem duas linhas. Nome e valor em cima, barra e parte embaixo. Nada é cortado. */
+.slices {
+	display: block;
+}
+
+.slice {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) max-content;
+	grid-template-areas:
+		'name value'
+		'bar share';
+	align-items: center;
+	gap: 6px 12px;
+	padding: 10px 0;
+	border-bottom: 1px solid var(--regua);
+}
+
+.sliceName {
+	grid-area: name;
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+
+.sliceValue {
+	grid-area: value;
+}
+
+.sliceBar {
+	grid-area: bar;
+	align-self: center;
+}
+
+.share {
+	grid-area: share;
+	font-family: var(--mono);
+	font-size: 14px;
+	font-variant-numeric: tabular-nums;
+	text-align: right;
+	color: var(--tinta-media);
+}
+
+.dayList {
+	display: contents;
+}
+
+.row,
+.dayLink {
+	display: grid;
+	grid-column: 1 / -1;
+	grid-template-columns: subgrid;
+	align-items: center;
+}
+
+.row {
+	border-bottom: 1px solid var(--regua);
+}
+
+.dayLink {
+	min-height: var(--linha);
+	text-decoration: none;
+	transition: background-color var(--rapido);
+}
+
+/* Colunas de número alinham pela direita. */
+.dayLink > :nth-child(n + 3) {
+	text-align: right;
+}
+
+/* O dia debaixo do ponteiro nos gráficos acende também aqui. */
+.dayLink[data-active='true'] {
+	background: color-mix(in srgb, var(--regua) 60%, transparent);
+}
+
+@media (hover: hover) {
+	.dayLink:hover {
+		background: color-mix(in srgb, var(--regua) 40%, transparent);
+	}
+}
+
+.columns {
+	min-height: 28px;
+	font-size: 12px;
+	color: var(--tinta-media);
+}
+
+.columns > :nth-child(n + 3) {
+	text-align: right;
+}
+
+.wideOnly {
+	display: none;
+}
+
+.day {
+	font-family: var(--mono);
+	font-variant-numeric: tabular-nums;
+}
+
+.weekday {
+	font-size: 14px;
+	color: var(--tinta-media);
+}
+
+.track {
+	display: flex;
+	height: 4px;
+}
+
+.bar {
+	min-width: 2px;
+	height: 4px;
+	background: var(--entrada);
+}
+
+.bar[data-red='true'] {
+	background: var(--saida);
+}
+
+.bar[data-from-right='true'] {
+	margin-left: auto;
+}
+
+.bar[data-empty='true'] {
+	visibility: hidden;
+}
+
+.nothing,
+.blankLine {
+	display: flex;
+	align-items: center;
+	min-height: var(--linha);
+	border-bottom: 1px solid var(--regua);
+}
+
+.nothing {
+	color: var(--tinta-media);
+}
+
+.blank {
+	border-top: 1px solid var(--regua-forte);
+}
+
+.failure {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 12px;
+	padding: 12px 0;
+	border-top: 1px solid var(--regua-forte);
+}
+
+/* O quadro pautado. A régua entre as casas é o fundo aparecendo pelo vão de 1px. */
+@container (min-width: 520px) {
+	.tiles {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1px;
+		border: 1px solid var(--regua-forte);
+		background: var(--regua-forte);
+	}
+
+	.tile {
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: flex-start;
+		gap: 8px;
+		min-height: 0;
+		padding: 12px 16px 16px;
+		border-bottom: 0;
+		background: var(--papel-alto);
+	}
+
+	.tileBody {
+		align-items: flex-start;
+		gap: 4px;
+		text-align: left;
+	}
+
+	/* Com espaço, a fatia cabe numa linha só, e as barras de todas as linhas alinham. */
+	.slices {
+		display: grid;
+		grid-template-columns: fit-content(40%) minmax(24px, 1fr) max-content max-content;
+		column-gap: 12px;
+	}
+
+	.slice {
+		grid-column: 1 / -1;
+		grid-template-areas: none;
+		grid-template-columns: subgrid;
+		gap: 0 12px;
+		min-height: var(--linha);
+		padding: 0;
+	}
+
+	.sliceName,
+	.sliceValue,
+	.sliceBar,
+	.share {
+		grid-area: auto;
+	}
+}
+
+@container (min-width: 640px) {
+	.days {
+		grid-template-columns: max-content minmax(24px, 1fr) max-content max-content max-content;
+		column-gap: 24px;
+	}
+
+	.wideOnly {
+		display: block;
+	}
+}
+
+@container (min-width: 780px) {
+	.tiles {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
+/* Duas colunas de gráfico. Cada uma ainda fica com pelo menos 430px. */
+@container (min-width: 920px) {
+	.board {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+/* Só com muita largura os seis indicadores cabem numa linha sem apertar o valor. */
+@container (min-width: 1400px) {
+	.tiles {
+		grid-template-columns: repeat(6, minmax(0, 1fr));
+	}
+}
+
+/* Aviso de linha, para explicar por que um bloco não está na tela. */
+.notice {
+	padding: 12px 0 12px 12px;
+	margin-bottom: 40px;
+	border-left: 2px solid var(--regua-forte);
+	font-size: 14px;
+	color: var(--tinta-media);
+}
+
+/* Com filtro de tag a lista de dias tem uma coluna de valor só, a de entradas. */
+.days[data-entries-only='true'] {
+	grid-template-columns: max-content minmax(24px, 1fr) max-content;
+}

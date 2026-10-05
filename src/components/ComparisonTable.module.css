@@ -1,0 +1,144 @@
+/*
+ * Celular primeiro. Cada medida é um bloco de três linhas, o período, a
+ * comparação e a diferença, com o nome de cada uma à esquerda e o valor à
+ * direita. Com largura, vira tabela de cinco colunas.
+ */
+.table {
+	margin-top: -12px;
+}
+
+.columns {
+	display: none;
+}
+
+.row {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) max-content;
+	grid-template-areas:
+		'metric change'
+		'a a'
+		'b b'
+		'difference difference';
+	align-items: center;
+	gap: 4px 12px;
+	padding: 12px 0;
+	border-bottom: 1px solid var(--regua);
+}
+
+.metric {
+	grid-area: metric;
+	font-weight: 600;
+}
+
+.change {
+	grid-area: change;
+}
+
+.a,
+.b,
+.difference {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 12px;
+	min-width: 0;
+}
+
+.a {
+	grid-area: a;
+}
+
+.b {
+	grid-area: b;
+}
+
+.difference {
+	grid-area: difference;
+}
+
+/* O nome do período ao lado do valor. Pode quebrar linha, o valor não. */
+.side {
+	min-width: 0;
+	font-size: 14px;
+	color: var(--tinta-media);
+}
+
+.plain,
+.signed {
+	font-family: var(--mono);
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+
+.signed {
+	font-weight: 500;
+}
+
+.missing {
+	font-size: 14px;
+	color: var(--tinta-media);
+}
+
+/* A moldura do painel mede a largura. Com 720px de quadro, cabe a tabela inteira. */
+@container (min-width: 720px) {
+	.table {
+		display: grid;
+		grid-template-columns: minmax(140px, 1.1fr) repeat(3, minmax(0, 1fr)) max-content;
+		column-gap: 24px;
+	}
+
+	.columns,
+	.row {
+		display: grid;
+		grid-column: 1 / -1;
+		grid-template-columns: subgrid;
+		align-items: center;
+	}
+
+	.columns {
+		min-height: 32px;
+		border-bottom: 1px solid var(--regua);
+		font-size: 12px;
+		color: var(--tinta-media);
+	}
+
+	.columns > :not(:first-child) {
+		text-align: right;
+	}
+
+	.row {
+		grid-template-areas: none;
+		gap: 0;
+		min-height: var(--linha);
+		padding: 0;
+	}
+
+	.metric,
+	.a,
+	.b,
+	.difference,
+	.change {
+		grid-area: auto;
+	}
+
+	.metric {
+		font-weight: 400;
+	}
+
+	.a,
+	.b,
+	.difference,
+	.change {
+		justify-content: flex-end;
+		text-align: right;
+	}
+
+	.change {
+		display: flex;
+	}
+
+	/* Com o cabeçalho das colunas à vista, o nome do período em cada linha sobra. */
+	.side {
+		display: none;
+	}
+}
