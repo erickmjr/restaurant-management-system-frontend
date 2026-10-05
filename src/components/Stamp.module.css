@@ -1,0 +1,24 @@
+.stamp {
+	position: absolute;
+	top: var(--carimbo-topo, -68px);
+	right: 0;
+	color: var(--travado);
+	transform: rotate(-6deg);
+	transform-origin: center;
+	pointer-events: none;
+}
+
+.word {
+	fill: currentColor;
+	font-family: var(--sans);
+	font-size: 20px;
+	font-weight: 600;
+	letter-spacing: 0.2em;
+}
+
+.date {
+	fill: currentColor;
+	font-family: var(--mono);
+	font-size: 12px;
+	letter-spacing: 0.06em;
+}

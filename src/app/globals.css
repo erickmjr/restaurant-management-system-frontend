@@ -1,0 +1,204 @@
+/*
+ * Tinta sobre papel. Os valores vêm do briefing, seção 4.
+ * Só existem duas adições, as duas por contraste. O ocre e o cinza de travado
+ * do briefing não chegam a 4.5 como texto sobre o papel, então texto usa as
+ * variantes -texto, e os tokens originais ficam para régua, borda e carimbo.
+ */
+:root {
+	color-scheme: light;
+
+	--papel: #f5f1e8;
+	--papel-alto: #fbf9f4;
+	--tinta: #17140f;
+	--tinta-media: #6b6459;
+	--regua: #ded5c4;
+	--regua-forte: #c4b79f;
+	--entrada: #2f6b4a;
+	--saida: #a32e26;
+	--janela: #b5781f;
+	--travado: #9a9388;
+
+	--janela-texto: #94601a;
+	--travado-texto: #736c60;
+
+	--serif: var(--font-serif), 'Times New Roman', serif;
+	--sans: var(--font-sans), system-ui, sans-serif;
+	--mono: var(--font-mono), ui-monospace, 'Courier New', monospace;
+
+	/* Altura da linha de lançamento. O dedo cansado precisa acertar. */
+	--linha: 48px;
+	--rapido: 120ms ease-out;
+	--tecla: 60ms ease-out;
+	/* Altura da barra de abas do celular. No computador ela não existe. */
+	--abas: calc(60px + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 960px) {
+	:root {
+		--abas: 0px;
+	}
+}
+
+@media (min-width: 720px) and (pointer: fine) {
+	:root {
+		--linha: 36px;
+	}
+}
+
+/* Modo noite é papel carbono, não dark mode genérico. */
+@media (prefers-color-scheme: dark) {
+	:root {
+		color-scheme: dark;
+
+		--papel: #15120e;
+		--papel-alto: #1e1a14;
+		--tinta: #efe8da;
+		--tinta-media: #a09684;
+		--regua: #332c22;
+		--regua-forte: #4a4133;
+		--entrada: #6fae88;
+		--saida: #d9736a;
+		--janela: #d9a24a;
+		--travado: #6e675b;
+
+		--janela-texto: #d9a24a;
+		--travado-texto: #8c8475;
+	}
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+	text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+	min-height: 100dvh;
+	background: var(--papel);
+	color: var(--tinta);
+	font-family: var(--sans);
+	font-size: 16px;
+	line-height: 1.35;
+	-webkit-font-smoothing: antialiased;
+	-webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol {
+	margin: 0;
+}
+
+h1,
+h2,
+h3 {
+	font-size: inherit;
+	font-weight: inherit;
+}
+
+ul,
+ol {
+	padding: 0;
+	list-style: none;
+}
+
+button,
+input,
+select,
+textarea {
+	font: inherit;
+	color: inherit;
+	border-radius: 0;
+}
+
+button {
+	cursor: pointer;
+	touch-action: manipulation;
+}
+
+button:disabled {
+	cursor: default;
+}
+
+a {
+	color: inherit;
+}
+
+:focus-visible {
+	outline: 2px solid var(--tinta);
+	outline-offset: 2px;
+}
+
+::selection {
+	background: var(--tinta);
+	color: var(--papel);
+}
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* Rótulo em caixa alta pequena. Título de seção, label de campo. */
+.label {
+	font-size: 12px;
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--tinta-media);
+}
+
+/* Ação discreta em texto. O caso raro mora atrás de um destes. */
+.link {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	padding: 0;
+	border: 0;
+	background: none;
+	font-size: 14px;
+	color: var(--tinta);
+	text-decoration: underline;
+	text-decoration-color: var(--regua-forte);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 4px;
+	transition: text-decoration-color var(--rapido);
+}
+
+.link:hover {
+	text-decoration-color: var(--tinta);
+}
+
+.error {
+	font-size: 14px;
+	color: var(--saida);
+}
+
+.muted {
+	color: var(--tinta-media);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		transition-duration: 0.01ms !important;
+	}
+}

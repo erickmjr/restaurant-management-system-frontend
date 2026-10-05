@@ -1,0 +1,48 @@
+.chip {
+	flex: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 48px;
+	padding: 0 16px;
+	border: 1px solid var(--regua-forte);
+	border-radius: 2px;
+	background: var(--papel-alto);
+	color: var(--tinta);
+	font-size: 16px;
+	font-weight: 500;
+	white-space: nowrap;
+	user-select: none;
+	transition:
+		background-color var(--rapido),
+		color var(--rapido),
+		border-color var(--rapido);
+}
+
+@media (hover: hover) {
+	.chip:hover {
+		border-color: var(--tinta);
+	}
+}
+
+.selected {
+	border-color: var(--tinta);
+	background: var(--tinta);
+	color: var(--papel);
+}
+
+/*
+ * As pastilhas quebram linha quando não cabem. Rolagem horizontal escondia
+ * opção fora da tela, e no computador nem dava para arrastar.
+ */
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+/* Duas pastilhas lado a lado, sem rolagem. */
+.pair {
+	display: flex;
+	gap: 8px;
+}
