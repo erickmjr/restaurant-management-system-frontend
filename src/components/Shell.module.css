@@ -1,0 +1,212 @@
+/*
+ * Celular primeiro. As abas ficam presas no pé, e o conteúdo rola por cima.
+ * A partir de 960px as abas e a barra do alto somem, e entra a barra lateral.
+ */
+.shell {
+	display: flex;
+	min-height: 100dvh;
+}
+
+.column {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.content {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	min-width: 0;
+	/* O conteúdo termina antes das abas, para nada ficar escondido atrás delas. */
+	padding-bottom: var(--abas);
+}
+
+/* ------------------------------------------------------------ celular */
+
+.top {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	min-height: 52px;
+	padding: 0 8px 0 16px;
+	border-bottom: 1px solid var(--regua-forte);
+	background: var(--papel);
+}
+
+.topName {
+	min-width: 0;
+	overflow: hidden;
+	font-size: 16px;
+	font-weight: 600;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.topOut {
+	display: inline-flex;
+	flex: none;
+	align-items: center;
+	gap: 6px;
+	min-height: 44px;
+	padding: 0 8px;
+	border: 0;
+	background: none;
+	font-size: 14px;
+	font-weight: 500;
+	color: var(--tinta-media);
+}
+
+.tabs {
+	position: fixed;
+	inset: auto 0 0;
+	z-index: 3;
+	display: grid;
+	grid-auto-columns: minmax(0, 1fr);
+	grid-auto-flow: column;
+	height: var(--abas);
+	padding-bottom: env(safe-area-inset-bottom);
+	border-top: 1px solid var(--regua-forte);
+	background: var(--papel);
+}
+
+.tab {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 2px;
+	min-width: 0;
+	/* A marca da aba atual fica na mesma linha da régua do topo da barra. */
+	margin-top: -1px;
+	border-top: 2px solid transparent;
+	font-size: 12px;
+	font-weight: 500;
+	color: var(--tinta-media);
+	text-decoration: none;
+	transition:
+		color var(--rapido),
+		border-color var(--rapido);
+}
+
+.tab > span {
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.tab.current {
+	border-top-color: var(--tinta);
+	color: var(--tinta);
+}
+
+/* ------------------------------------------------------------ computador */
+
+.side {
+	display: none;
+}
+
+@media (min-width: 960px) {
+	.top,
+	.tabs {
+		display: none;
+	}
+
+	.side {
+		position: sticky;
+		top: 0;
+		display: flex;
+		flex: none;
+		flex-direction: column;
+		gap: 32px;
+		width: 256px;
+		height: 100dvh;
+		padding: 32px 16px 20px;
+		overflow-y: auto;
+		border-right: 1px solid var(--regua-forte);
+		background: var(--papel);
+	}
+
+	.brand {
+		padding: 0 12px;
+	}
+
+	/* O nome do restaurante é a voz do documento, como a data da página. */
+	.restaurant {
+		margin-top: 8px;
+		font-family: var(--serif);
+		font-size: 28px;
+		line-height: 1.1;
+		letter-spacing: -0.01em;
+		overflow-wrap: anywhere;
+	}
+
+	.sideNav {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		gap: 4px;
+	}
+
+	.sideLink {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		width: 100%;
+		min-height: 44px;
+		padding: 0 12px 0 10px;
+		border: 0;
+		border-left: 2px solid transparent;
+		background: none;
+		font-size: 16px;
+		font-weight: 500;
+		color: var(--tinta-media);
+		text-align: left;
+		text-decoration: none;
+		transition:
+			color var(--rapido),
+			background-color var(--rapido),
+			border-color var(--rapido);
+	}
+
+	.sideLink:hover {
+		background: color-mix(in srgb, var(--regua) 50%, transparent);
+		color: var(--tinta);
+	}
+
+	.sideLink.current {
+		border-left-color: var(--tinta);
+		background: var(--papel-alto);
+		color: var(--tinta);
+	}
+
+	.account {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		padding-top: 16px;
+		border-top: 1px solid var(--regua-forte);
+	}
+
+	.operator {
+		display: flex;
+		flex-direction: column;
+		padding: 0 12px;
+	}
+
+	.operatorName {
+		overflow: hidden;
+		font-size: 14px;
+		font-weight: 600;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.role {
+		font-size: 12px;
+		color: var(--tinta-media);
+	}
+}

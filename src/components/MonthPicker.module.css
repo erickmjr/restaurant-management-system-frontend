@@ -1,0 +1,75 @@
+.picker {
+	max-width: 380px;
+	padding: 8px 12px 12px;
+	border: 1px solid var(--regua-forte);
+	border-radius: 2px;
+	background: var(--papel);
+}
+
+.head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.year {
+	font-family: var(--mono);
+	font-size: 16px;
+	font-weight: 500;
+	font-variant-numeric: tabular-nums;
+}
+
+.turn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: var(--tinta);
+}
+
+.turn:disabled {
+	color: var(--regua-forte);
+}
+
+/* Quatro meses por linha. Cada um é um alvo de 44px. */
+.months {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 4px;
+}
+
+.month {
+	min-height: 44px;
+	padding: 0;
+	border: 1px solid var(--regua);
+	border-radius: 2px;
+	background: var(--papel-alto);
+	font-size: 14px;
+	font-weight: 500;
+	color: var(--tinta);
+	transition:
+		background-color var(--rapido),
+		border-color var(--rapido);
+}
+
+.month:disabled {
+	border-color: transparent;
+	background: none;
+	color: var(--regua-forte);
+}
+
+@media (hover: hover) {
+	.month:not(:disabled):hover {
+		border-color: var(--tinta);
+	}
+}
+
+.month[data-selected='true'] {
+	border-color: var(--tinta);
+	background: var(--tinta);
+	color: var(--papel);
+}

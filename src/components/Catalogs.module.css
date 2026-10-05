@@ -1,0 +1,198 @@
+.header {
+	margin-bottom: 24px;
+}
+
+/* Título de apêndice. A serif fica para datas e totais, aqui é interface. */
+.title {
+	margin-top: 4px;
+	font-size: 28px;
+	font-weight: 600;
+	line-height: 1.15;
+	letter-spacing: -0.01em;
+}
+
+.lede {
+	margin-top: 8px;
+	font-size: 14px;
+	color: var(--tinta-media);
+}
+
+/*
+ * Cada catálogo é uma coluna. Cabem tantas quantas a largura deixar, e no
+ * celular fica uma só. Nenhuma coluna fica mais estreita que 300px.
+ */
+.columns {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+	gap: 40px 48px;
+	align-items: start;
+}
+
+.section {
+	min-width: 0;
+}
+
+.heading {
+	padding-bottom: 8px;
+	border-bottom: 1px solid var(--regua-forte);
+	font-size: 12px;
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--tinta-media);
+}
+
+.row {
+	border-bottom: 1px solid var(--regua);
+}
+
+.nothing,
+.line {
+	display: flex;
+	align-items: center;
+	min-height: var(--linha);
+	border-bottom: 1px solid var(--regua);
+}
+
+.nothing {
+	color: var(--tinta-media);
+}
+
+/* O nome é o próprio botão de renomear. O lápis diz que dá para mexer. */
+.name {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	width: 100%;
+	min-height: var(--linha);
+	padding: 4px 0;
+	border: 0;
+	background: none;
+	text-align: left;
+	overflow-wrap: anywhere;
+}
+
+.pencil {
+	flex: none;
+	color: var(--regua-forte);
+	transition: color var(--rapido);
+}
+
+@media (hover: hover) {
+	.name:hover {
+		background: color-mix(in srgb, var(--regua) 40%, transparent);
+	}
+
+	.name:hover .pencil {
+		color: var(--tinta);
+	}
+}
+
+.create {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin-top: 12px;
+}
+
+.createRow {
+	display: flex;
+	gap: 8px;
+}
+
+.createRow > input {
+	flex: 1;
+	min-width: 0;
+}
+
+.rename {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	padding: 8px 0 4px;
+}
+
+.renameFoot {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+}
+
+.warning {
+	font-size: 14px;
+	color: var(--tinta-media);
+}
+
+.tags {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	padding-bottom: 12px;
+}
+
+/* Pastilha pequena. Tag já anexada tem contorno cheio, tag disponível tem tracejado. */
+.tag,
+.tagOption,
+.tagAdd {
+	display: inline-flex;
+	align-items: center;
+	min-height: 32px;
+	border: 1px solid var(--regua-forte);
+	border-radius: 2px;
+	background: var(--papel);
+	font-size: 14px;
+	line-height: 1;
+	white-space: nowrap;
+}
+
+.tag {
+	padding-left: 12px;
+}
+
+.tagRemove {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 30px;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: var(--tinta-media);
+}
+
+.tagRemove:hover {
+	color: var(--saida);
+}
+
+.tagAdd {
+	justify-content: center;
+	width: 32px;
+	padding: 0;
+	color: var(--tinta-media);
+}
+
+.tagAdd:hover,
+.tagOption:hover {
+	border-color: var(--tinta);
+	color: var(--tinta);
+}
+
+.tagOption {
+	padding: 0 12px;
+	border-style: dashed;
+	border-color: var(--tinta-media);
+	background: none;
+}
+
+.tagHint {
+	font-size: 14px;
+	color: var(--tinta-media);
+}
+
+.tagError {
+	flex-basis: 100%;
+}

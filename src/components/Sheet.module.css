@@ -1,0 +1,40 @@
+.sheet {
+	display: flex;
+	flex: 1;
+	min-width: 0;
+	background: var(--papel-alto);
+}
+
+/* A margem do caderno. É ela que muda de cor conforme a janela. */
+.inner {
+	flex: 1;
+	min-width: 0;
+	/* Em tela muito larga o conteúdo para de esticar, para a linha não ficar longa demais de ler. */
+	max-width: 1760px;
+	margin-left: 12px;
+	padding: 20px 16px 40px 14px;
+	border-left: 2px solid var(--regua-forte);
+	transition: border-color var(--rapido);
+}
+
+.inner[data-margin='open'] {
+	border-left-color: var(--janela);
+}
+
+.inner[data-margin='locked'] {
+	border-left-color: var(--travado);
+}
+
+@media (min-width: 640px) {
+	.inner {
+		margin-left: 20px;
+		padding: 28px 28px 48px 24px;
+	}
+}
+
+@media (min-width: 960px) {
+	.inner {
+		margin-left: 24px;
+		padding: 36px 40px 56px 32px;
+	}
+}

@@ -1,0 +1,46 @@
+.field {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.input {
+	width: 100%;
+	min-height: 48px;
+	padding: 0 12px;
+	border: 1px solid var(--regua-forte);
+	border-radius: 2px;
+	background: var(--papel-alto);
+	color: var(--tinta);
+	/* 16px impede o zoom automático do iOS ao focar. */
+	font-size: 16px;
+	transition: border-color var(--rapido);
+}
+
+.input::placeholder {
+	color: var(--tinta-media);
+}
+
+.input:hover {
+	border-color: var(--tinta-media);
+}
+
+.input:focus-visible {
+	border-color: var(--tinta);
+	outline-offset: 0;
+}
+
+.mono {
+	font-family: var(--mono);
+	font-size: 14px;
+}
+
+.invalid,
+.invalid:hover {
+	border-color: var(--saida);
+}
+
+.hint {
+	font-size: 14px;
+	color: var(--tinta-media);
+}

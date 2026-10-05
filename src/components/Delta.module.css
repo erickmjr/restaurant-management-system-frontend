@@ -1,0 +1,25 @@
+/* A direção vem da seta e do sinal. A cor só diz se a mudança foi boa ou ruim. */
+.delta {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	font-family: var(--mono);
+	font-size: 12px;
+	font-weight: 500;
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+	color: var(--tinta-media);
+}
+
+.good {
+	color: var(--entrada);
+}
+
+.bad {
+	color: var(--saida);
+}
+
+.none {
+	font-size: 12px;
+	color: var(--tinta-media);
+}

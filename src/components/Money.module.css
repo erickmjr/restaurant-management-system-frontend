@@ -1,0 +1,54 @@
+/*
+ * A regra mais importante do briefing. Mono com dígitos de mesma largura,
+ * para a coluna ficar alinhada e o olho somar sozinho. Reais em tinta cheia,
+ * R$ e centavos em tinta média, para o olho ler primeiro o que importa.
+ *
+ * As cores passam por variáveis para a página travada poder rebaixar a linha inteira.
+ */
+.money {
+	font-family: var(--mono);
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+	text-align: right;
+}
+
+.currency {
+	font-size: calc(1em - 2px);
+	color: var(--money-soft, var(--tinta-media));
+}
+
+.soft {
+	color: var(--money-soft, var(--tinta-media));
+}
+
+.reais,
+.sign {
+	color: var(--money-ink, var(--tinta));
+}
+
+.entry .reais {
+	color: var(--money-entry, var(--entrada));
+}
+
+.expense .reais,
+.expense .sign {
+	color: var(--money-expense, var(--saida));
+}
+
+/* Voz do documento. O total é o único dinheiro fora da mono. */
+.serif {
+	font-family: var(--serif);
+	font-size: 44px;
+	line-height: 1;
+	letter-spacing: -0.01em;
+}
+
+.serif .currency {
+	margin-right: 4px;
+	font-size: 20px;
+}
+
+/* Ocupa o lugar do parêntese do saldo negativo, sem aparecer. */
+.ghost {
+	visibility: hidden;
+}

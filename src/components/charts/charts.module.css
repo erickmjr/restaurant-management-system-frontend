@@ -1,0 +1,200 @@
+/*
+ * Gráficos em tinta sobre papel. Marcas finas, grade em régua de 1px sólida,
+ * rótulos em mono. O dado é a única coisa que pode falar alto.
+ *
+ * O verde e o vermelho do app não se separam bem para quem é daltônico,
+ * e o validador de paleta confirma isso. Por isso nenhuma série é identificada
+ * só pela cor. Entrada sobe e saída desce, e período atual contra anterior
+ * é tinta contra cinza.
+ */
+.plot {
+	position: relative;
+	outline-offset: 4px;
+}
+
+.svg {
+	display: block;
+	overflow: visible;
+	/* Arrastar na horizontal percorre os dias, e a rolagem vertical da página continua livre. */
+	touch-action: pan-y;
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+.svg[data-clickable='true'] {
+	cursor: pointer;
+}
+
+.grid {
+	stroke: var(--regua);
+	stroke-width: 1;
+	shape-rendering: crispEdges;
+}
+
+.zero {
+	stroke: var(--regua-forte);
+	stroke-width: 1;
+	shape-rendering: crispEdges;
+}
+
+.tick {
+	font-family: var(--mono);
+	font-size: 12px;
+	font-variant-numeric: tabular-nums;
+	fill: var(--tinta-media);
+}
+
+/* A faixa debaixo do ponteiro. Um realce de papel, atrás das marcas. */
+.band {
+	fill: var(--regua);
+	opacity: 0.6;
+}
+
+.entry {
+	fill: var(--entrada);
+}
+
+.expense {
+	fill: var(--saida);
+}
+
+.line {
+	fill: none;
+	stroke: var(--tinta);
+	stroke-width: 2;
+	stroke-linejoin: round;
+	stroke-linecap: round;
+}
+
+.linePrevious {
+	fill: none;
+	stroke: var(--tinta-media);
+	stroke-width: 1.5;
+	stroke-linejoin: round;
+	stroke-linecap: round;
+}
+
+.cross {
+	stroke: var(--tinta-media);
+	stroke-width: 1;
+	shape-rendering: crispEdges;
+}
+
+/* Ponto com anel de papel, para continuar legível onde cruza a linha. */
+.dot {
+	fill: var(--tinta);
+	stroke: var(--papel-alto);
+	stroke-width: 2;
+}
+
+.dotPrevious {
+	fill: var(--tinta-media);
+	stroke: var(--papel-alto);
+	stroke-width: 2;
+}
+
+.valueLabel {
+	font-family: var(--mono);
+	font-size: 12px;
+	font-weight: 500;
+	font-variant-numeric: tabular-nums;
+	fill: var(--tinta);
+}
+
+/* A dica sobe acima do desenho, para não tapar as barras do dia que ela descreve. */
+.tooltip {
+	position: absolute;
+	bottom: calc(100% - 14px);
+	z-index: 1;
+	width: max-content;
+	max-width: 100%;
+	padding: 8px 12px;
+	border: 1px solid var(--tinta);
+	border-radius: 2px;
+	background: var(--papel-alto);
+	font-size: 12px;
+	line-height: 1.5;
+	pointer-events: none;
+}
+
+.tipTitle {
+	margin-bottom: 4px;
+	font-weight: 600;
+}
+
+.tipRow {
+	display: grid;
+	grid-template-columns: 12px max-content 1fr;
+	align-items: center;
+	column-gap: 8px;
+}
+
+.tipValue {
+	font-family: var(--mono);
+	font-weight: 500;
+	font-variant-numeric: tabular-nums;
+	text-align: right;
+	white-space: nowrap;
+}
+
+.tipLabel {
+	color: var(--tinta-media);
+	white-space: nowrap;
+}
+
+.tipNote {
+	margin-top: 4px;
+	color: var(--tinta-media);
+}
+
+/* Chave de linha, não caixinha. Um traço curto na cor da série. */
+.key {
+	width: 12px;
+	height: 2px;
+}
+
+.key[data-series='entry'],
+.swatch[data-series='entry'] {
+	background: var(--entrada);
+}
+
+.key[data-series='expense'],
+.swatch[data-series='expense'] {
+	background: var(--saida);
+}
+
+.key[data-series='current'],
+.swatch[data-series='current'] {
+	background: var(--tinta);
+}
+
+.key[data-series='previous'],
+.swatch[data-series='previous'] {
+	background: var(--tinta-media);
+}
+
+.legend {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px 16px;
+	font-size: 12px;
+	color: var(--tinta-media);
+}
+
+.legendItem {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+/* A legenda espelha a marca. Retângulo para barra, traço para linha. */
+.swatch {
+	width: 10px;
+	height: 10px;
+}
+
+.swatch[data-series='current'],
+.swatch[data-series='previous'] {
+	width: 14px;
+	height: 2px;
+}

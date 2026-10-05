@@ -1,0 +1,243 @@
+.header {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 16px 32px;
+	margin-bottom: 24px;
+}
+
+.heading {
+	min-width: 0;
+}
+
+/* A voz do documento. Data por extenso, grande. */
+.date {
+	font-family: var(--serif);
+	font-size: 44px;
+	line-height: 1.05;
+	letter-spacing: -0.01em;
+	text-wrap: balance;
+}
+
+.meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0 4px;
+	margin-top: 4px;
+	margin-left: -12px;
+}
+
+/* A competência em ISO, pequena, para não deixar dúvida de qual dia é. */
+.iso {
+	font-family: var(--mono);
+	font-size: 12px;
+	font-variant-numeric: tabular-nums;
+	color: var(--tinta-media);
+}
+
+/* Virar a página. Alvo de 44px, desenho de 20. */
+.turn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	color: var(--tinta-media);
+	transition: color var(--rapido);
+}
+
+.turn:hover {
+	color: var(--tinta);
+}
+
+/* Procurar um dia qualquer, por calendário. */
+.search {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	min-height: 40px;
+	margin-left: 12px;
+	padding: 0 12px;
+	border: 1px solid var(--regua-forte);
+	border-radius: 2px;
+	background: none;
+	font-size: 14px;
+	font-weight: 500;
+	color: var(--tinta);
+	transition: border-color var(--rapido);
+}
+
+.search:hover,
+.search[aria-expanded='true'] {
+	border-color: var(--tinta);
+}
+
+.window {
+	margin-top: 4px;
+	font-size: 14px;
+	color: var(--janela-texto);
+}
+
+.quiet {
+	margin-top: 4px;
+	font-size: 14px;
+	color: var(--tinta-media);
+}
+
+/*
+ * No celular os botões de lançar ficam no pé. Aqui eles só aparecem com tela larga.
+ * O seletor leva o cabeçalho junto para ganhar da regra do próprio componente.
+ */
+.header .headerActions {
+	display: none;
+}
+
+/*
+ * O corpo da página. A moldura mede a largura disponível, e é ela que decide
+ * quantas colunas cabem. Assim a regra vale igual com ou sem barra lateral.
+ */
+.frame {
+	container-type: inline-size;
+}
+
+.body {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	column-gap: 48px;
+	align-items: start;
+}
+
+.section {
+	margin-bottom: 24px;
+}
+
+.sectionTitle {
+	padding-bottom: 8px;
+	border-bottom: 1px solid var(--regua-forte);
+	font-size: 12px;
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--tinta-media);
+}
+
+/* Linha pautada sem lançamento. Mesma altura e mesma régua de uma linha cheia. */
+.nothing,
+.blankLine {
+	display: flex;
+	align-items: center;
+	min-height: var(--linha);
+	border-bottom: 1px solid var(--regua);
+}
+
+.nothing {
+	color: var(--tinta-media);
+}
+
+.blank {
+	border-top: 1px solid var(--regua-forte);
+}
+
+.failure {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 12px;
+	padding: 12px 0;
+	border-top: 1px solid var(--regua-forte);
+}
+
+.totals {
+	position: relative;
+	margin-top: 8px;
+}
+
+/* Página travada ganha folga em cima dos totais, para o carimbo pegar o canto sem riscar valor. */
+.totals[data-locked='true'] {
+	margin-top: 64px;
+}
+
+.subtotal {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	min-height: var(--linha);
+	border-top: 1px solid var(--regua-forte);
+}
+
+/* Régua dupla antes do total, como em livro contábil. */
+.net {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 8px 16px;
+	padding-top: 16px;
+	border-top: 3px double var(--tinta);
+}
+
+.net > :last-child {
+	margin-left: auto;
+}
+
+/* Com largura, entradas e saídas ficam lado a lado, e os totais embaixo das duas. */
+@container (min-width: 720px) {
+	.body {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.totals {
+		grid-column: 1 / -1;
+	}
+}
+
+/* Com mais largura ainda, os totais ganham a própria coluna, à direita. */
+@container (min-width: 1100px) {
+	.body {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(300px, 0.8fr);
+	}
+
+	.totals,
+	.totals[data-locked='true'] {
+		grid-column: auto;
+		margin-top: 0;
+		padding-top: 22px;
+	}
+
+	.totals[data-locked='true'] {
+		--carimbo-topo: 4px;
+
+		padding-top: 86px;
+	}
+}
+
+/* O pé do celular. Fica logo acima das abas, ao alcance do polegar. */
+.dock {
+	position: fixed;
+	inset: auto 0 var(--abas);
+	z-index: 2;
+	padding: 10px 12px;
+	border-top: 1px solid var(--regua-forte);
+	background: var(--papel);
+}
+
+.dockSpace {
+	height: 64px;
+}
+
+@media (min-width: 960px) {
+	.dock,
+	.dockSpace {
+		display: none;
+	}
+
+	.header .headerActions {
+		display: grid;
+		flex: none;
+		width: 400px;
+		max-width: 100%;
+	}
+}
