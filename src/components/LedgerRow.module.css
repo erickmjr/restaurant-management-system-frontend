@@ -1,0 +1,126 @@
+/* Papel pautado. Régua de 1px entre linhas, sem cartão e sem sombra. */
+.row {
+	border-bottom: 1px solid var(--regua);
+}
+
+.main {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	width: 100%;
+	min-height: var(--linha);
+	padding: 4px 0;
+	border: 0;
+	background: none;
+	text-align: left;
+}
+
+@media (hover: hover) {
+	button.main:hover {
+		background: color-mix(in srgb, var(--regua) 40%, transparent);
+	}
+}
+
+.text {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+/* Nome comprido quebra linha. Cortar o nome do método esconderia informação. */
+.name {
+	overflow-wrap: anywhere;
+}
+
+.note {
+	font-size: 12px;
+	color: var(--tinta-media);
+	overflow-wrap: anywhere;
+}
+
+/* Página travada. A linha inteira cai para o cinza, valor incluído. */
+.locked {
+	color: var(--travado-texto);
+	--money-ink: var(--travado-texto);
+	--money-soft: var(--travado-texto);
+	--money-entry: var(--travado-texto);
+	--money-expense: var(--travado-texto);
+}
+
+.locked .note {
+	color: var(--travado-texto);
+}
+
+/* Lançamento novo assenta. Entra 4px acima e cai, sem deslizar nem escalar. */
+.settling {
+	animation: settle 120ms ease-out both;
+}
+
+@keyframes settle {
+	from {
+		transform: translateY(-4px);
+		opacity: 0.4;
+	}
+
+	to {
+		transform: none;
+		opacity: 1;
+	}
+}
+
+.tray,
+.confirm {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px 16px;
+	padding: 4px 0 12px;
+}
+
+.when {
+	font-family: var(--mono);
+	font-size: 12px;
+	font-variant-numeric: tabular-nums;
+	color: var(--tinta-media);
+}
+
+.actions {
+	display: flex;
+	gap: 8px;
+	margin-left: auto;
+}
+
+.actions > * {
+	min-height: 44px;
+}
+
+.confirm {
+	margin-bottom: 12px;
+	padding-bottom: 4px;
+	padding-left: 12px;
+	border-left: 2px solid var(--saida);
+}
+
+.question {
+	flex: 1 1 200px;
+	font-size: 14px;
+}
+
+.confirm :global(.error) {
+	flex-basis: 100%;
+}
+
+/* Vermelho é carimbo, não preenchimento. Só o texto e a borda. */
+.danger,
+.danger:hover {
+	border-color: var(--saida);
+	color: var(--saida);
+}
+
+@media (min-width: 720px) and (pointer: fine) {
+	.actions > * {
+		min-height: 36px;
+	}
+}
