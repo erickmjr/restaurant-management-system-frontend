@@ -1,0 +1,459 @@
+.header {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 12px 24px;
+	margin-bottom: 16px;
+}
+
+.title {
+	margin-top: 4px;
+	font-family: var(--serif);
+	font-size: 44px;
+	line-height: 1.05;
+	letter-spacing: -0.01em;
+}
+
+.controls {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.turn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	border: 1px solid var(--regua-forte);
+	border-radius: 2px;
+	background: none;
+	color: var(--tinta);
+	transition: border-color var(--rapido);
+}
+
+.turn:hover:not(:disabled) {
+	border-color: var(--tinta);
+}
+
+.turn:disabled {
+	color: var(--regua-forte);
+}
+
+.todayButton {
+	min-height: 44px;
+	padding: 0 16px;
+	border-color: var(--regua-forte);
+}
+
+/*
+ * O mês em três números. No celular são três linhas de livro, rótulo à esquerda
+ * e valor à direita, para o valor nunca ser cortado. Com largura viram uma faixa.
+ */
+.summary {
+	margin: 0 0 16px;
+	border-top: 1px solid var(--regua-forte);
+	transition: opacity var(--rapido);
+}
+
+.summary[data-stale='true'] {
+	opacity: 0.45;
+}
+
+.figure {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	min-height: 40px;
+	border-bottom: 1px solid var(--regua);
+}
+
+.figure dd {
+	margin: 0;
+	font-weight: 500;
+}
+
+@media (min-width: 640px) {
+	.summary {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		border-bottom: 1px solid var(--regua-forte);
+	}
+
+	.figure {
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: flex-start;
+		gap: 4px;
+		min-height: 0;
+		padding: 10px 16px 12px 0;
+		border-bottom: 0;
+	}
+
+	.figure + .figure {
+		padding-left: 16px;
+		border-left: 1px solid var(--regua);
+	}
+
+	.figure dd {
+		font-size: 20px;
+	}
+}
+
+.failure {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 12px;
+	padding: 12px 0;
+}
+
+/* A moldura mede a largura, e é ela que decide o tamanho dos blocos e onde vai o detalhe. */
+.frame {
+	container-type: inline-size;
+}
+
+.layout {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 24px 32px;
+	align-items: start;
+}
+
+.board {
+	container: grade / inline-size;
+	min-width: 0;
+}
+
+/* A grade do mês. A régua entre os blocos é o fundo aparecendo pelo vão de 1px. */
+.grid {
+	display: grid;
+	grid-template-columns: repeat(7, minmax(0, 1fr));
+	gap: 1px;
+	border: 1px solid var(--regua-forte);
+	background: var(--regua-forte);
+}
+
+.weekday {
+	padding: 6px 0;
+	background: var(--papel);
+	font-size: 12px;
+	font-weight: 500;
+	text-align: center;
+	color: var(--tinta-media);
+}
+
+.blank {
+	background: var(--papel);
+}
+
+/*
+ * O bloco do dia. A faixa da esquerda remete ao saldo, verde quando o dia
+ * fechou para cima e vermelha quando fechou para baixo. A seta ao lado do
+ * número diz a mesma coisa pela forma, para quem não distingue as cores.
+ */
+.cell {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
+	min-height: 64px;
+	padding: 4px 2px 4px 5px;
+	border: 0;
+	background: var(--papel-alto);
+	color: var(--tinta);
+	text-align: left;
+	box-shadow: inset 3px 0 0 transparent;
+	transition: background-color var(--rapido);
+}
+
+.cell[data-state='positive'] {
+	box-shadow: inset 3px 0 0 var(--entrada);
+}
+
+.cell[data-state='negative'] {
+	box-shadow: inset 3px 0 0 var(--saida);
+}
+
+.cell[data-state='empty'] {
+	color: var(--tinta-media);
+}
+
+.cell[data-future='true'] {
+	background: var(--papel);
+	color: var(--regua-forte);
+}
+
+@media (hover: hover) {
+	.cell:hover {
+		background: color-mix(in srgb, var(--regua) 45%, var(--papel-alto));
+	}
+}
+
+/* O dia escolhido ganha contorno de tinta, por dentro, para não mexer na grade. */
+.cell[data-selected='true'] {
+	outline: 2px solid var(--tinta);
+	outline-offset: -2px;
+}
+
+.cell:focus-visible {
+	outline-offset: -2px;
+}
+
+.cellTop {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 4px;
+}
+
+.number {
+	min-width: 20px;
+	padding: 0 3px;
+	font-family: var(--mono);
+	font-size: 12px;
+	font-weight: 500;
+	font-variant-numeric: tabular-nums;
+	line-height: 18px;
+	text-align: center;
+}
+
+/* Hoje. O número em tinta cheia. */
+.cell[data-today='true'] .number {
+	background: var(--tinta);
+	color: var(--papel);
+}
+
+/* Ocre é sempre tempo acabando. Um risco embaixo do número de quem ainda está com a janela aberta. */
+.cell[data-window='true'] .number {
+	box-shadow: 0 2px 0 var(--janela);
+}
+
+.up {
+	flex: none;
+	color: var(--entrada);
+}
+
+.down {
+	flex: none;
+	color: var(--saida);
+}
+
+/*
+ * Valores do bloco estreito. Aqui, e só aqui, o dinheiro sai da mono, porque
+ * "13,4 mil" em mono não cabe num bloco de 50px. A ordem é fixa, em cima o que
+ * entrou e embaixo o que saiu.
+ */
+.tiny {
+	display: flex;
+	flex-direction: column;
+	font-size: 12px;
+	font-variant-numeric: tabular-nums;
+	line-height: 1.3;
+	white-space: nowrap;
+}
+
+.in {
+	color: var(--entrada);
+}
+
+.out {
+	color: var(--saida);
+}
+
+.zero {
+	color: var(--tinta-media);
+}
+
+/* Um conteúdo para bloco estreito e outro para bloco largo. A grade escolhe pelo próprio tamanho. */
+.full {
+	display: none;
+	flex-direction: column;
+	gap: 2px;
+	font-size: 14px;
+}
+
+.medium {
+	display: none;
+}
+
+.cellNet {
+	margin-top: 4px;
+	padding-top: 4px;
+	border-top: 1px solid var(--regua);
+	font-weight: 500;
+}
+
+.legend {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px 20px;
+	margin-top: 12px;
+	font-size: 12px;
+	color: var(--tinta-media);
+}
+
+.legend li {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.windowKey {
+	width: 12px;
+	height: 2px;
+	background: var(--janela);
+}
+
+@container grade (min-width: 560px) {
+	.cell {
+		min-height: 84px;
+		padding: 6px 6px 6px 10px;
+	}
+
+	.number {
+		font-size: 14px;
+		line-height: 22px;
+	}
+
+	.tiny {
+		font-size: 14px;
+	}
+}
+
+@container grade (min-width: 900px) {
+	.short,
+	.tiny {
+		display: none;
+	}
+
+	.medium {
+		display: inline;
+	}
+
+	.full {
+		display: flex;
+	}
+
+	.cell {
+		min-height: 124px;
+		padding: 8px 10px 10px 12px;
+	}
+
+	.weekday {
+		padding: 8px 0;
+	}
+}
+
+/* O dia escolhido. No celular vem embaixo da grade, e com largura vai para o lado. */
+.detail {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	min-width: 0;
+	padding-top: 16px;
+	border-top: 3px double var(--tinta);
+}
+
+.detailDate {
+	font-family: var(--serif);
+	font-size: 28px;
+	line-height: 1.1;
+	letter-spacing: -0.01em;
+}
+
+.quiet {
+	color: var(--tinta-media);
+}
+
+.windowNote {
+	font-size: 14px;
+	color: var(--janela-texto);
+}
+
+.lockedNote {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 14px;
+	color: var(--travado-texto);
+}
+
+.detailTotals {
+	border-top: 1px solid var(--regua-forte);
+}
+
+.detailRow {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	min-height: 40px;
+	padding: 4px 0;
+	border-bottom: 1px solid var(--regua);
+}
+
+.detailNet {
+	border-bottom: 0;
+	border-top: 3px double var(--tinta);
+	font-weight: 600;
+}
+
+.detailSection {
+	min-width: 0;
+}
+
+.detailHeading {
+	padding-bottom: 6px;
+	border-bottom: 1px solid var(--regua-forte);
+	font-size: 12px;
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--tinta-media);
+}
+
+.detailText {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.detailNote {
+	font-size: 12px;
+	color: var(--tinta-media);
+	overflow-wrap: anywhere;
+}
+
+.detailActions {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin-top: 4px;
+}
+
+@container (min-width: 880px) {
+	/* A coluna do detalhe só existe quando há um dia escolhido. Sem ele, a grade fica com tudo. */
+	.layout[data-detail='true'] {
+		grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
+	}
+
+	.detail {
+		position: sticky;
+		top: 24px;
+		padding-top: 0;
+		border-top: 0;
+	}
+}
+
+/* No celular a grade sangra até as bordas da folha, para cada bloco ganhar uns pixels. */
+@media (max-width: 639px) {
+	.grid {
+		margin-inline: -14px -16px;
+		border-inline: 0;
+	}
+}
