@@ -1,0 +1,89 @@
+/*
+ * No celular, uma coluna no topo e à esquerda. Sem card, sem centralizar no
+ * meio do nada. Com largura, o formulário fica à esquerda e o resto da tela
+ * é a página do caderno.
+ */
+.page {
+	display: flex;
+	min-height: 100dvh;
+}
+
+.column {
+	flex: 1;
+	min-width: 0;
+	max-width: 480px;
+	padding: 40px 16px 48px;
+}
+
+.title {
+	margin-top: 4px;
+	font-family: var(--serif);
+	font-size: 44px;
+	line-height: 1.05;
+	letter-spacing: -0.01em;
+	overflow-wrap: anywhere;
+}
+
+.lede {
+	margin-top: 8px;
+	padding-bottom: 24px;
+	border-bottom: 3px double var(--tinta);
+	font-size: 14px;
+	color: var(--tinta-media);
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 24px;
+	margin-top: 24px;
+}
+
+.submit {
+	width: 100%;
+}
+
+.form :global(.link) {
+	align-self: flex-start;
+	margin-top: -12px;
+}
+
+.paper {
+	display: none;
+}
+
+@media (min-width: 960px) {
+	.column {
+		flex: none;
+		width: 480px;
+		padding: 72px 48px 64px;
+	}
+
+	/* A página em branco. Margem em ocre à esquerda, como a de um dia com a janela aberta. */
+	.paper {
+		display: block;
+		flex: 1;
+		min-width: 0;
+		padding: 72px 64px 0 48px;
+		border-left: 2px solid var(--janela);
+		background: var(--papel-alto);
+	}
+
+	.motto {
+		max-width: 16em;
+		padding-bottom: 28px;
+		border-bottom: 1px solid var(--regua-forte);
+		font-family: var(--serif);
+		font-size: 44px;
+		line-height: 1.1;
+		letter-spacing: -0.01em;
+		color: var(--tinta-media);
+		text-wrap: balance;
+	}
+
+	.rule {
+		height: 48px;
+		border-bottom: 1px solid var(--regua);
+	}
+}
